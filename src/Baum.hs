@@ -1,4 +1,4 @@
-module BaumModul where
+module Baum where
 
 data  Baum e = Nil | Blatt (Baum e) e (Baum e) deriving (Show)
 
@@ -45,7 +45,7 @@ loescheBaum :: Ord e =>(Baum e) -> e -> (Baum e)
 loescheBaum Nil x = Nil
 loescheBaum (Blatt links element rechts) x
   | x < element   = rebalance (Blatt (loescheBaum links x) element rechts)
-  | x > element   = rebalance (links element (loescheBaum rechts x))
+  | x > element   = rebalance (Blatt links element (loescheBaum rechts x))
 loescheBaum (Blatt Nil element rechts) x   = rechts
 loescheBaum (Blatt links element rechts) x = rebalance (Blatt tz z rechts)
   where (z,tz) = loescheMax links

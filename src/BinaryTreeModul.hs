@@ -1,16 +1,12 @@
 module BinaryTreeModul
-( BinaryTree(Nil,Node), addRoot, hasLeft, hasRight, size, isEmpty
+( BinaryTree(Nil,Node), hasLeft, hasRight, size, isEmpty
 ) where
 
 import DataStructModul
 
 data BinaryTree a = Nil | Node a (BinaryTree a) (BinaryTree a) deriving (Show)
 
---addRoot :: a -> BinaryTree a
---addRoot element = Node element Nil Nil
-addRoot :: a -> BinaryTree a -> BinaryTree a
-addRoot element Nil = Node element Nil Nil
-addRoot _ bTree = bTree
+--addRoot => Wird fuer obige Datenstruktur nicht benoetigt
 
 hasLeft :: BinaryTree a -> Bool
 hasLeft Nil = False
@@ -21,6 +17,15 @@ hasRight :: BinaryTree a -> Bool
 hasRight Nil = False
 hasRight (Node _ _ Nil) = False
 hasRight (Node _ _ _) = True
+
+--getLeft :: BinaryTree a -> BinaryTree a
+
+
+--getRight
+--insertLeft
+--insertRight
+--remove
+--attach
 
 instance DataStruct (BinaryTree a) where
     size (Nil) = 0
