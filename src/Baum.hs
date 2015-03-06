@@ -45,14 +45,14 @@ loescheBaum :: Ord e =>(Baum e) -> e -> (Baum e)
 loescheBaum Nil x = Nil
 loescheBaum (Blatt links element rechts) x
   | x < element   = rebalance (Blatt (loescheBaum links x) element rechts)
-  | x > element   = rebalance (links element (loescheBaum rechts x))
+  | x > element   = rebalance (Blatt links element (loescheBaum rechts x))
 loescheBaum (Blatt Nil element rechts) x   = rechts
 loescheBaum (Blatt links element rechts) x = rebalance (Blatt tz z rechts)
   where (z,tz) = loescheMax links
 
 -- (inorder t1)++[y]++(inorder t21)++[z]++(inorder t22)++[x]++(inorder t3)
 
-rebalance :: Ord e =>(Baum e) -> (Baum e)
+rebalance :: Ord e => (Baum e) -> (Baum e)
 rebalance (Blatt links element rechts)
  | abs (sy) < 2         = Blatt links element rechts
  | sy == 2 && st1 /= -1 = rotateright (Blatt links element rechts)
