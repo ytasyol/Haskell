@@ -1,16 +1,16 @@
 module BaumModul where
 
-data (Ord e) => Baum e = Nil | Blatt (Baum e) e (Baum e)
+data  Baum e = Nil | Blatt (Baum e) e (Baum e) deriving (Show)
 
 -- Sucht in einem Baum ein bestimmtes Element
-existiert :: (Baum e) -> e -> Bool
+existiert :: Ord e => (Baum e) -> e -> Bool
 existiert Nil x = False
 existiert (Blatt links element rechts) x
    | x == element    = True
    | x < element     = existiert links x
    | otherwise = existiert rechts x
 
-einfuegen :: (Baum e) -> e -> (Baum e)
+einfuegen :: Ord e =>(Baum e) -> e -> (Baum e)
 einfuegen Nil x = Blatt Nil x Nil
 einfuegen (Blatt links element rechts) x
   | x == element    = Blatt links element rechts
@@ -33,7 +33,7 @@ loescheBaum (Blatt links element rechts) x = Blatt tz z rechts
   where (z,tz) = loescheMax links
 -}
 
-baumEinfuegen :: (Baum e) -> e -> (Baum e)
+baumEinfuegen :: Ord e =>(Baum e) -> e -> (Baum e)
 baumEinfuegen Nil x = Blatt Nil x Nil
 baumEinfuegen (Blatt links element rechts) x
   | x == element    = Blatt links element rechts
@@ -41,7 +41,7 @@ baumEinfuegen (Blatt links element rechts) x
   | otherwise = rebalance (Blatt links element (baumEinfuegen rechts x))
 
 
-loescheBaum :: (Baum e) -> e -> (Baum e)
+loescheBaum :: Ord e =>(Baum e) -> e -> (Baum e)
 loescheBaum Nil x = Nil
 loescheBaum (Blatt links element rechts) x
   | x < element   = rebalance (Blatt (loescheBaum links x) element rechts)
@@ -52,7 +52,7 @@ loescheBaum (Blatt links element rechts) x = rebalance (Blatt tz z rechts)
 
 -- (inorder t1)++[y]++(inorder t21)++[z]++(inorder t22)++[x]++(inorder t3)
 
-rebalance :: (Baum e) -> (Baum e)
+rebalance :: Ord e =>(Baum e) -> (Baum e)
 rebalance (Blatt links element rechts)
  | abs (sy) < 2         = Blatt links element rechts
  | sy == 2 && st1 /= -1 = rotateright (Blatt links element rechts)
