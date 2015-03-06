@@ -2,14 +2,7 @@ module BinaryTreeModul
 ( BinaryTree(Nil,Node), addRoot, hasLeft, hasRight, size, isEmpty
 ) where
 
---Damit mehrere Datenstrukturen die selbe Signatur fuer
---bestimmte Funktionen haben.
--- => erleichtert den Funktionsaufruf, da der Compiler sonst
---    nicht wuesste welche size er benutzen soll!
---    (Bsp.: BinaryTree.size, Queue.size)
-class DataStruct a where
-    size :: a -> Int
-    isEmpty :: a -> Bool
+import DataStructModul
 
 data BinaryTree a = Nil | Node a (BinaryTree a) (BinaryTree a) deriving (Show)
 
