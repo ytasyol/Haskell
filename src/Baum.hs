@@ -1,5 +1,6 @@
+module BaumModul where
 
-data Baum e = Nil | Blatt (Baum e) e (Baum e)
+data (Ord e) => Baum e = Nil | Blatt (Baum e) e (Baum e)
 
 -- Sucht in einem Baum ein bestimmtes Element
 existiert :: (Baum e) -> e -> Bool
