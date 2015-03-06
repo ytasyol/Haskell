@@ -1,84 +1,79 @@
 
 data Baum e = Nil | Blatt (Baum e) e (Baum e)
 
+-- Sucht in einem Baum ein bestimmtes Element
 existiert :: (Baum e) -> e -> Bool
-existiert Nil e = False
-existiert (Blatt links e rechts) x
-   | x == e    = True
-   | x < e     = existiert links x
+existiert Nil x = False
+existiert (Blatt links element rechts) x
+   | x == element    = True
+   | x < element     = existiert links x
    | otherwise = existiert rechts x
-
 
 einfuegen :: (Baum e) -> e -> (Baum e)
 einfuegen Nil x = Blatt Nil x Nil
-einfuegen (Blatt links e rechts) x
-  | x == e    = Blatt links e rechts
-  | x < e     = Blatt (einfuegen links x) e rechts
-  | otherwise = Blatt links e (einfuegen rechts x)
+einfuegen (Blatt links element rechts) x
+  | x == element    = Blatt links element rechts
+  | x < element     = Blatt (einfuegen links x) element rechts
+  | otherwise = Blatt links element (einfuegen rechts x)
+
+loescheMax :: (Baum e) -> (e,Baum e)
+loescheMax (Blatt links element Nil) = (element,links)
+loescheMax (Blatt links element rechts) = (z, Blatt links element tz)
+  where (z,tz) = loescheMax rechts
+
+{-
+loescheBaum :: (Baum e) -> e -> (Baum e)
+loescheBaum Nil x = Nil
+loescheBaum (Blatt links element rechts) x
+  | x < element   = Blatt (loescheBaum links x) element rechts
+  | x > element   = Blatt links element (loescheBaum rechts x)
+loescheBaum (Blatt Nil element rechts) x   = rechts
+loescheBaum (Blatt links element rechts) x = Blatt tz z rechts
+  where (z,tz) = loescheMax links
+-}
+
+baumEinfuegen :: (Baum e) -> e -> (Baum e)
+baumEinfuegen Nil x = Blatt Nil x Nil
+baumEinfuegen (Blatt links element rechts) x
+  | x == element    = Blatt links element rechts
+  | x < element     = rebalance (Blatt (baumEinfuegen links x) element rechts)
+  | otherwise = rebalance (Blatt links element (baumEinfuegen rechts x))
 
 
-deletemax :: (Baum a) -> (a,Baum a)
-deletemax (Blatt links y Nil) = (y,t1)
-deletemax (Blatt links y rechts) = (z, Blatt links y tz)
-  where (z,tz) = deletemax t2
-
-deletetree :: (Stree a) -> a -> (Stree a)
-deletetree Nil x = Nil
-deletetree (Blatt tleft y tright) x
-  | x < y   = Blatt (deletetree tleft x) y tright
-  | x > y   = Blatt tleft y (deletetree tright x)
-
-
-deletetree (Node Nil y tright) x   = tright
-deletetree (Node tleft y tright) x = Node tz z tright
-  where (z,tz) = deletemax tleft
-
-
-inserttree :: (Stree a) -> a -> (Stree a)
-inserttree Nil x = Node Nil x Nil
-inserttree (Node tleft y tright) x
-  | x == y    = Node tleft y tright
-  | x < y     = rebalance (Node (inserttree tleft x) y tright)
-  | otherwise = rebalance (Node tleft y (inserttree tright x))
-
-
-deletetree :: (Stree a) -> a -> (Stree a)
-deletetree Nil x = Nil
-deletetree (Node tleft y tright) x
-  | x < y   = rebalance (Node (deletetree tleft x) y tright)
-  | x > y   = rebalance (tleft y (deletetree tright x))
-
-
-
-deletetree (Node Nil y tright) x   = tright
-deletetree (Node tleft y tright) x = rebalance (Node tz z tright)
-  where (z,tz) = deletemax tleft
+loescheBaum :: (Baum e) -> e -> (Baum e)
+loescheBaum Nil x = Nil
+loescheBaum (Blatt links element rechts) x
+  | x < element   = rebalance (Blatt (loescheBaum links x) element rechts)
+  | x > element   = rebalance (links element (loescheBaum rechts x))
+loescheBaum (Blatt Nil element rechts) x   = rechts
+loescheBaum (Blatt links element rechts) x = rebalance (Blatt tz z rechts)
+  where (z,tz) = loescheMax links
 
 -- (inorder t1)++[y]++(inorder t21)++[z]++(inorder t22)++[x]++(inorder t3)
 
-rebalance :: (Stree a) -> (Stree a)
-rebalance (Node t1 y t2)
- | abs (sy) < 2         = Node t1 y t2
- | sy == 2 && st1 /= -1 = rotateright (Node t1 y t2)
- | sy == 2 && st1 == -1 = rotateright (Node (rotateleft t1) y t2)
- | sy == -2 && st2 /= 1 = rotateleft (Node t1 y t2)
- | sy == -2 && st2 == 1 = rotateleft (Node t1 y (rotateright t2))
+rebalance :: (Baum e) -> (Baum e)
+rebalance (Blatt links element rechts)
+ | abs (sy) < 2         = Blatt links element rechts
+ | sy == 2 && st1 /= -1 = rotateright (Blatt links element rechts)
+ | sy == 2 && st1 == -1 = rotateright (Blatt (rotateleft links) element rechts)
+ | sy == -2 && st2 /= 1 = rotateleft (Blatt links element rechts)
+ | sy == -2 && st2 == 1 = rotateleft (Blatt links element (rotateright rechts))
   where
-  sy  = slope (Node t1 y t2)
-  st1 = slope t1
-  st2 = slope t2
+  sy  = slope (Blatt links element rechts)
+  st1 = slope links
+  st2 = slope rechts
 
-rotateright (Node (Node t1 y t2) x t3) = Node t1 y (Node t2 x t3)
-rotateleft  (Node t1 x (Node t2 y t3)) = Node (Node t1 y t2) x t3
+rotateright (Blatt (Blatt links element rechts) x t3) = Blatt links element (Blatt rechts x t3)
+rotateleft  (Blatt links x (Blatt rechts element t3)) = Blatt (Blatt links element rechts) x t3
 
 
-slope :: (Stree a) -> Int
+slope :: (Baum e) -> Int
 slope Nil = 0
-slope (Node t1 x t2) = (height t1) - (height t2)
+slope (Blatt links element rechts) = (height links) - (height rechts)
 
-height :: (Stree a) -> Int
+height :: (Baum e) -> Int
 height Nil = 0
-height (Node t1 x t2) = 1 + (max (height t1) (height t2))
+height (Blatt links element rechts) = 1 + (max (height links) (height rechts))
 
 {-
 height :: (Stree a) -> Int
