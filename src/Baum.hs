@@ -52,7 +52,7 @@ loescheBaum (Blatt links element rechts) x = rebalance (Blatt tz z rechts)
 
 -- (inorder t1)++[y]++(inorder t21)++[z]++(inorder t22)++[x]++(inorder t3)
 
-rebalance :: Ord e =>(Baum e) -> (Baum e)
+rebalance :: Ord e => (Baum e) -> (Baum e)
 rebalance (Blatt links element rechts)
  | abs (sy) < 2         = Blatt links element rechts
  | sy == 2 && st1 /= -1 = rotateright (Blatt links element rechts)
