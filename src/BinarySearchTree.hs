@@ -1,6 +1,6 @@
 module BinarySearchTree (
 BinarySearchTree(Nil,Node), isEmpty, size, contains, insert, {-remove,-}
-insertList, preOrder, postOrder, inOrder, {-levelOrder-}
+insertList, preOrder, postOrder, inOrder, levelOrder,
 ) where
 
 {-Datenstruktur-}
@@ -44,16 +44,32 @@ insertList (x:xs) pTree = insertList xs (insert x pTree)
 
 preOrder :: BinarySearchTree a -> [a]
 preOrder Nil = []
-preOrder (Node tElement tLeft tRight) = [tElement] ++ (preOrder tLeft) ++ (preOrder tRight)
+preOrder (Node tElement tLeft tRight) = [tElement] ++ preOrder tLeft ++ preOrder tRight
 
 postOrder :: BinarySearchTree a -> [a]
 postOrder Nil = []
-postOrder (Node tElement tLeft tRight) = (postOrder tLeft) ++ (postOrder tRight) ++ [tElement]
+postOrder (Node tElement tLeft tRight) = postOrder tLeft ++ postOrder tRight ++ [tElement]
 
 inOrder :: BinarySearchTree a -> [a]
 inOrder Nil = []
-inOrder (Node tElement tLeft tRight) = (inOrder tLeft) ++ [tElement] ++ (inOrder tRight)
+inOrder (Node tElement tLeft tRight) = inOrder tLeft ++ [tElement] ++ inOrder tRight
 
---levelOrder :: BinarySearchTree a -> [a]
---levelOrder Nil = []
---levelOrder (Node tElement tLeft tRight) = []
+levelOrder :: BinarySearchTree a -> [a]
+levelOrder Nil = []
+levelOrder pTree = getElements (generateNodeList [pTree])
+	where
+	    generateNodeList [] = []
+	    generateNodeList nodes = nodes ++ generateNodeList (listListToList [getChilds node | node <- nodes])
+	    getChilds Nil = []
+	    getChilds (Node _ tLeft tRight) = [tLeft,tRight]
+	    listListToList [] = []
+	    listListToList (x:xs) = x ++ listListToList xs
+	    getElements [] = []
+	    getElements (Nil:xs) = []
+	    getElements ((Node tElement tLeft tRight):xs) = [tElement] ++ getElements xs
+
+{-Signaturen fuer Interne Funktionen (fuer Verstaendnis)-}
+--generateNodeList :: [BinarySearchTree a] -> [BinarySearchTree a]
+--getChilds :: BinarySearchTree a -> [BinarySearchTree a]
+--getElements :: [BinarySearchTree a] -> [a]
+--listListToList :: [[BinarySearchTree a]] -> [BinarySearchTree a]
