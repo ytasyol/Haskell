@@ -1,0 +1,28 @@
+ToDo-Liste:
+
+1. BinarySearchTree remove und levelOrder implementieren
+2. HUnit Tests fuer BinarySearchTree schreiben
+    (https://wiki.haskell.org/HUnit_1.0_User%27s_Guide)
+3. BinarySearchTree zu AVLTree erweitern
+4. HUnit Tests fuer AVLTree
+
+Optional:
+5. GUI fuer Anzeige der Baeume
+
+    +------------------------------------------------------------------+
+    |File Edit                                                         |
+    +------------------------------------------------------------------+
+    |Funktionen  |View                                                 |
+    |------------|                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    |            |                                                     |
+    +------------------------------------------------------------------+
+    |Text Ausgabe:                                                     |
+    +------------------------------------------------------------------+
