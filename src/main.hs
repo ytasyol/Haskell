@@ -3,7 +3,7 @@ module Main where
 --baum :: Baum Int
 --baum = Blatt Nil 1 Nil
 
-import AVLTree
+import BinarySearchTree
 
 {-Tests-}
 testInsert1 = insert 3 Nil
