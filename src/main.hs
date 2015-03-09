@@ -18,6 +18,8 @@ testContains2 = contains 1 testInsert5
 testInsertList = insertList [5,2,1,7,9,3,6,8,4,7,9,3,74,123,5,2,6] Nil
 
 testBST = insertList [5,3,1,4,9,7,13] Nil
+bstList = [testBST]
 testPreOrder = preOrder testBST
 testPostOrder = postOrder testBST
 testInOrder = inOrder testBST
+testLevelOrder = levelOrder testBST
