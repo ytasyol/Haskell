@@ -1,0 +1,39 @@
+
+
+
+1. Install Haskell Platform (64bit)
+2. Install Gtk+ 2.22 (64bit) in C:\
+3. add to Path: C:\gtk\bin  => Test: pkg-config --cflags gtk+-2.0
+4. cabal update
+   cabal install cabal-install
+   add to Path first-position : C:\Users\USERNAME\AppData\Roaming\cabal\bin
+   cabal update
+   cabal install aeson
+   cabal install haskell-src-exts
+   cabal install ghc-mod
+   cabal install cmdargs
+   canal install haddock
+5. Install hdevtools
+    a. Download the source code of hdevtools for Windows from https://github.com/mvoidex/hdevtools
+    b. Unpack it to some folder
+    c. Go to that folder and run:
+        1. runhaskell Setup.hs configure --user
+        2. runhaskell Setup.hs build
+        3. runhaskell Setup.hs install
+6. Gtk2Hs Bindings
+    cabal update
+    cabal install gtk2hs-buildtools
+    !!! After installing gtk2hs-buildtools, make sure that gtk2hsC2hs is in a directory that is on your %PATH%.
+    cabal install gtk
+7. Test Haskell Gtk
+
+    import Graphics.UI.Gtk
+    main :: IO ()
+    main = do
+      initGUI
+      window <- windowNew
+      widgetShowAll window
+      mainGUI
+
+    ghci> :load FILE
+    ghci> main
