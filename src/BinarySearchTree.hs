@@ -1,5 +1,5 @@
 module BinarySearchTree (
-BinarySearchTree(Nil,Node), isEmpty, size, contains, insert, {-remove,-}
+BinarySearchTree(Nil,Node), isEmpty, size, contains, insert, remove,
 insertList, preOrder, postOrder, inOrder, levelOrder,
 ) where
 
@@ -30,10 +30,24 @@ insert pElement (Node tElement tLeft tRight)
     | (<=) pElement tElement = Node tElement (insert pElement tLeft) tRight
     | otherwise = Node tElement tLeft (insert pElement tRight)
 
---remove :: (Ord a, Eq a) => a -> BinarySearchTree a -> BinarySearchTree a
---remove pElement Nil = Nil
---remove pElement (Node tElement tLeft tRight)
---    | (==) pElement tElement
+{- Quellen:
+ -
+ - remove: http://stackoverflow.com/questions/9626132/delete-node-from-binary-search-tree-haskell
+ - removeRoot: DuA 09 Such- und AVL-B+ñume v 8.0 valid [Script Herr Meinholz]
+ -}
+remove :: (Ord a, Eq a) => a -> BinarySearchTree a -> BinarySearchTree a
+remove _ Nil = Nil
+remove pElement (Node tElement tLeft tRight)
+    | (==) pElement tElement = removeRoot (Node tElement tLeft tRight)
+    | (<) pElement tElement = (Node tElement (removeRoot tLeft) tRight)
+    | otherwise = (Node tElement tLeft (removeRoot tRight))
+    where
+        removeRoot Nil = Nil
+        removeRoot (Node _ Nil tRight) = tRight
+        removeRoot (Node _ tLeft Nil) = tLeft
+        removeRoot (Node _ tLeft tRight) = (Node (nextInOrderElement tRight) tLeft (remove (nextInOrderElement tRight) tRight))
+        nextInOrderElement (Node tElement Nil _) = tElement
+        nextInOrderElement (Node tElement tLeft _) = nextInOrderElement tLeft
 
 insertList :: (Ord a, Eq a) => [a] -> BinarySearchTree a -> BinarySearchTree a
 insertList [] pTree = pTree
