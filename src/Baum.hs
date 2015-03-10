@@ -1,3 +1,4 @@
+module Baum where
 
 data  Baum e = Nil | Blatt (Baum e) e (Baum e) deriving (Show)
 

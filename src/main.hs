@@ -1,5 +1,8 @@
 module Main where
 
+import Graphics.UI.Gtk
+
+
 --baum :: Baum Int
 --baum = Blatt Nil 1 Nil
 
@@ -23,3 +26,12 @@ testPreOrder = preOrder testBST
 testPostOrder = postOrder testBST
 testInOrder = inOrder testBST
 testLevelOrder = levelOrder testBST
+{-}
+
+main :: IO ()
+main = do
+  initGUI
+  window <- windowNew
+  widgetShowAll window
+  mainGUI
+  -}
