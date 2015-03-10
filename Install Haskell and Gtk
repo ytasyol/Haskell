@@ -8,12 +8,12 @@
    cabal install cabal-install
    add to Path first-position : C:\Users\USERNAME\AppData\Roaming\cabal\bin
    cabal update
-   cabal install aeson
+   cabal install aeson (for json)
    cabal install haskell-src-exts
    cabal install ghc-mod
-   cabal install cmdargs
-   canal install haddock
-5. Install hdevtools
+   cabal install cmdargs (for Shell args)
+   canal install haddock (docu)
+5. Install hdevtools (opt)
     a. Download the source code of hdevtools for Windows from https://github.com/mvoidex/hdevtools
     b. Unpack it to some folder
     c. Go to that folder and run:

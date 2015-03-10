@@ -39,8 +39,8 @@ remove :: (Ord a, Eq a) => a -> BinarySearchTree a -> BinarySearchTree a
 remove _ Nil = Nil
 remove pElement (Node tElement tLeft tRight)
     | (==) pElement tElement = removeRoot (Node tElement tLeft tRight)
-    | (<) pElement tElement = (Node tElement (removeRoot tLeft) tRight)
-    | otherwise = (Node tElement tLeft (removeRoot tRight))
+    | (<) pElement tElement = (Node tElement (remove pElement tLeft) tRight)
+    | otherwise = (Node tElement tLeft (remove pElement tRight))
     where
         removeRoot Nil = Nil
         removeRoot (Node _ Nil tRight) = tRight
