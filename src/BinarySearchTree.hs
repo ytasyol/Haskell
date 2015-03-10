@@ -45,9 +45,9 @@ remove pElement (Node tElement tLeft tRight)
         removeRoot Nil = Nil
         removeRoot (Node _ Nil tRight) = tRight
         removeRoot (Node _ tLeft Nil) = tLeft
-        removeRoot (Node _ )
-
-
+        removeRoot (Node _ tLeft tRight) = (Node (nextInOrderElement tRight) tLeft (remove (nextInOrderElement tRight) tRight))
+        nextInOrderElement (Node tElement Nil _) = tElement
+        nextInOrderElement (Node tElement tLeft _) = nextInOrderElement tLeft
 
 insertList :: (Ord a, Eq a) => [a] -> BinarySearchTree a -> BinarySearchTree a
 insertList [] pTree = pTree
