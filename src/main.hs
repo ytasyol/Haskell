@@ -1,13 +1,34 @@
 module Main where
 
---import Graphics.UI.Gtk
+
+import Test.HUnit
+import Test.HUnit.Text
+import BinarySearchTreeTest
+
+main = do
+    putStrLn "BinarySearchTreeTest:"
+    runTestTT testList
 
 
---baum :: Baum Int
---baum = Blatt Nil 1 Nil
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{-
 import BinarySearchTree
-
 {-Tests-}
 testInsert1 = insert 3 Nil
 testInsert2 = insert 5 testInsert1
@@ -27,6 +48,7 @@ testPostOrder = postOrder testBST
 testInOrder = inOrder testBST
 testLevelOrder = levelOrder testBST
 
+--import Graphics.UI.Gtk
 {-
 main :: IO ()
 main = do
@@ -35,3 +57,4 @@ main = do
   widgetShowAll window
   mainGUI
   -}
+-}
