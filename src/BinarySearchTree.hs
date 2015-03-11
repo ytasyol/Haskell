@@ -5,7 +5,7 @@ insertList, preOrder, postOrder, inOrder, levelOrder,
 
 {-Datenstruktur-}
 data BinarySearchTree a = Nil | Node  a (BinarySearchTree a) (BinarySearchTree a)
-	deriving Show
+	--deriving Show
 
 {-Informations Funktionen-}
 isEmpty :: BinarySearchTree a -> Bool
@@ -102,3 +102,8 @@ instance (Eq a) => Eq (BinarySearchTree a) where
     (==) (Node firstElement firstLeft firstRight) (Node secondElement secondLeft secondRight)
         | (==) firstElement secondElement = ((==) firstLeft secondLeft) && ((==) firstRight secondRight)
         | otherwise = False
+
+
+instance (Show a) => Show (BinarySearchTree a) where
+  show Nil = "Nil"
+  show (Node tElement tLeft tRight) = "{" ++ show tElement ++ " " ++ show tLeft ++ " " ++ show tRight ++ "}"
