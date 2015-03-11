@@ -1,6 +1,6 @@
 module Main where
 
-import Graphics.UI.Gtk
+--import Graphics.UI.Gtk
 
 
 --baum :: Baum Int
@@ -26,8 +26,8 @@ testPreOrder = preOrder testBST
 testPostOrder = postOrder testBST
 testInOrder = inOrder testBST
 testLevelOrder = levelOrder testBST
-{-}
 
+{-
 main :: IO ()
 main = do
   initGUI

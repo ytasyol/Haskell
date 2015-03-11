@@ -96,3 +96,9 @@ levelOrder pTree = getElements (generateNodeList [pTree])
 --getChilds :: BinarySearchTree a -> [BinarySearchTree a]
 --getElements :: [BinarySearchTree a] -> [a]
 --listListToList :: [[BinarySearchTree a]] -> [BinarySearchTree a]
+
+instance (Eq a) => Eq (BinarySearchTree a) where
+    (==) Nil Nil = True
+    (==) (Node firstElement firstLeft firstRight) (Node secondElement secondLeft secondRight)
+        | (==) firstElement secondElement = ((==) firstLeft secondLeft) && ((==) firstRight secondRight)
+        | otherwise = False
