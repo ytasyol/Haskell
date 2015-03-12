@@ -7,7 +7,7 @@ import Test.HUnit.Text
 import BinarySearchTree
 
 {-Liste aller Tests-}
-testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests)
+testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests ++removeTests)
 
 {-Tesdaten-}
 testBST1 = insertList [5,3,1,4,9,7,13] Nil
@@ -38,3 +38,41 @@ heightTests = [TestLabel "heightTest1" (TestCase heightTest1), TestLabel "height
 containsTest1 = assertEqual ("contains" ++ (show testBST1)) False (contains 28 testBST1)
 containsTest2 = assertEqual ("contains" ++ (show testBST1)) True (contains 3 testBST1)
 containsTests = [TestLabel "heightTest1" (TestCase containsTest1), TestLabel "heightTest2" (TestCase containsTest2)]
+
+{-Testen von remove-}
+remove1 = insertList [5,3,7,1,4] Nil
+remove1comp = insertList [5,3,1,4] Nil
+removeTest1 = assertEqual "remove1" (remove1comp) (remove 7 remove1)
+
+remove2 = insertList [5,3,7,6,1,4] Nil
+remove2comp = insertList [5,3,1,4,7] Nil
+removeTest2 = assertEqual "remove2" (remove2comp) (remove 6 remove2)
+
+remove3 = insertList [5,3,7,8,1,4] Nil
+remove3comp = insertList [5,3,1,4,7] Nil
+removeTest3 = assertEqual "remove3" (remove3comp) (remove 8 remove3)
+
+remove4 = insertList [5,3,7,6,1,4] Nil
+remove4comp = insertList [5,3,1,4,6] Nil
+removeTest4 = assertEqual "remove4" (remove4comp) (remove 7 remove4)
+
+remove5 = insertList [5,3,7,8,1,4] Nil
+remove5comp = insertList [5,3,1,4,8] Nil
+removeTest5 = assertEqual "remove5" (remove5comp) (remove 7 remove5)
+
+remove6 = insertList [5,3,7,8,1,4] Nil
+remove6comp = insertList [7,3,1,4,8] Nil
+removeTest6 = assertEqual "remove6" (remove6comp) (remove 5 remove6)
+
+remove7 = insertList [5,3,7,6,1,4] Nil
+remove7comp = insertList [6,7,3,1,4] Nil
+removeTest7 = assertEqual "remove7" (remove7comp) (remove 5 remove7)
+
+remove8 = insertList [5,3,1,4,7,6,7] Nil
+remove8comp = insertList [6,7,7,3,1,4] Nil
+removeTest8 = assertEqual "remove8" (remove8comp) (remove 5 remove8)
+
+removeTests = [TestLabel "remove1" (TestCase removeTest1),TestLabel "remove2" (TestCase removeTest2),
+            TestLabel "remove3" (TestCase removeTest3), TestLabel "remove4" (TestCase removeTest4),
+            TestLabel "remove5" (TestCase removeTest5),TestLabel "remove6" (TestCase removeTest6),
+            TestLabel "remove7" (TestCase removeTest7),TestLabel "remove8" (TestCase removeTest8)]
