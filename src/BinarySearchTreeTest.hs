@@ -74,12 +74,9 @@ remove8comp = insertList [6,7,7,3,1,4] Nil
 removeTest8 = assertEqual "remove8" (remove8comp) (remove 5 remove8)
 
 removeTests = [TestLabel "remove1" (TestCase removeTest1),TestLabel "remove2" (TestCase removeTest2),
-            TestLabel "remove3" (TestCase removeTest3), TestLabel "remove4" (TestCase removeTest4),
-            TestLabel "remove5" (TestCase removeTest5),TestLabel "remove6" (TestCase removeTest6),
-            TestLabel "remove7" (TestCase removeTest7),TestLabel "remove8" (TestCase removeTest8)]
-            
-            
-
+               TestLabel "remove3" (TestCase removeTest3), TestLabel "remove4" (TestCase removeTest4),
+               TestLabel "remove5" (TestCase removeTest5),TestLabel "remove6" (TestCase removeTest6),
+               TestLabel "remove7" (TestCase removeTest7),TestLabel "remove8" (TestCase removeTest8)]
 
 {-Testen von insert-}
 insertTest1 = assertEqual ("insert" ++ ("Nil")) (Node 7 Nil Nil) (insert 7 Nil)
