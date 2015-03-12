@@ -104,7 +104,6 @@ instance (Eq a) => Eq (BinarySearchTree a) where
         | (==) firstElement secondElement = ((==) firstLeft secondLeft) && ((==) firstRight secondRight)
         | otherwise = False
 
-
 instance (Show a) => Show (BinarySearchTree a) where
   show Nil = "Nil"
   show (Node tElement tLeft tRight) = "{" ++ show tElement ++ " " ++ show tLeft ++ " " ++ show tRight ++ "}"
