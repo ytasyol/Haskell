@@ -7,7 +7,7 @@ import Test.HUnit.Text
 import BinarySearchTree
 
 {-Liste aller Tests-}
-testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests++removeTests++ insertTests)
+testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests++removeTests++ insertTests ++ insertListTests)
 
 {-Tesdaten-}
 testBST1 = insertList [5,3,1,4,9,7,13] Nil
@@ -82,3 +82,8 @@ removeTests = [TestLabel "remove1" (TestCase removeTest1),TestLabel "remove2" (T
 insertTest1 = assertEqual ("insert" ++ ("Nil")) (Node 7 Nil Nil) (insert 7 Nil)
 insertTest2 = assertEqual ("insert" ++ (show testBST3)) (Node 5 (Node 3 (Node 1 Nil Nil) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) Nil) (Node 13 Nil Nil))) (insert 6 testBST3)
 insertTests = [TestLabel "insertTest1" (TestCase insertTest1), TestLabel "insertTest2" (TestCase insertTest2)]
+
+{-Testen von insertList-}
+insertListTest1 = assertEqual ("insertList1") (Node 5 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) (Node 8 Nil Nil)) (Node 13 Nil Nil))) (insertList [6,8,2] testBST3)
+insertListTest2 = assertEqual ("insertList1") (Node 7 (Node 4 Nil Nil) (Node 9 Nil (Node 13 Nil Nil))) (insertList [7,4,9,13] Nil)
+insertListTests = [TestLabel "insertListTest1" (TestCase insertListTest1), TestLabel "insertListTest2" (TestCase insertListTest2)]
