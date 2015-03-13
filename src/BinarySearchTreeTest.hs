@@ -7,7 +7,8 @@ import Test.HUnit.Text
 import BinarySearchTree
 
 {-Liste aller Tests-}
-testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests++removeTests++ insertTests ++ insertListTests)
+testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests ++ removeTests++ insertTests ++
+                     insertListTests ++ eqTests ++ levelOrderTests)
 
 {-Tesdaten-}
 testBST1 = insertList [5,3,1,4,9,7,13] Nil
@@ -84,6 +85,15 @@ insertTest2 = assertEqual ("insert" ++ (show testBST3)) (Node 5 (Node 3 (Node 1 
 insertTests = [TestLabel "insertTest1" (TestCase insertTest1), TestLabel "insertTest2" (TestCase insertTest2)]
 
 {-Testen von insertList-}
-insertListTest1 = assertEqual ("insertList1") (Node 5 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) (Node 8 Nil Nil)) (Node 13 Nil Nil))) (insertList [6,8,2] testBST3)
-insertListTest2 = assertEqual ("insertList1") (Node 7 (Node 4 Nil Nil) (Node 9 Nil (Node 13 Nil Nil))) (insertList [7,4,9,13] Nil)
+insertListTest1 = assertEqual "insertList1" (Node 5 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) (Node 8 Nil Nil)) (Node 13 Nil Nil))) (insertList [6,8,2] testBST3)
+insertListTest2 = assertEqual "insertList1" (Node 7 (Node 4 Nil Nil) (Node 9 Nil (Node 13 Nil Nil))) (insertList [7,4,9,13] Nil)
 insertListTests = [TestLabel "insertListTest1" (TestCase insertListTest1), TestLabel "insertListTest2" (TestCase insertListTest2)]
+
+{-Testen von (==)-}
+eqTest1 = assertEqual "(==)" testBST1 testBST3
+eqTests = [TestLabel "insertTest1" (TestCase insertTest1), TestLabel "insertTest2" (TestCase insertTest2)]
+
+{-Testen von levelOrder-}
+levelOrderTest1 = assertEqual ("levelOrder" ++ (show testBST1)) [5,3,9,1,4,7,13] (levelOrder testBST1)
+levelOrderTest2 = assertEqual ("levelOrder" ++ (show testBST1)) [5,3,9,1,7,13] (levelOrder testBST2)
+levelOrderTests = [TestLabel "levelOrderTest1" (TestCase levelOrderTest1), TestLabel "levelOrderTest2" (TestCase levelOrderTest2)]
