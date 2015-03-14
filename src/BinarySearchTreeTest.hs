@@ -7,13 +7,14 @@ import Test.HUnit.Text
 import BinarySearchTree
 
 {-Liste aller Tests-}
-testList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests ++ removeTests++ insertTests ++
+bstTestList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests ++ removeTests++ insertTests ++
                      insertListTests ++ eqTests ++ levelOrderTests)
 
 {-Tesdaten-}
 testBST1 = insertList [5,3,1,4,9,7,13] Nil
 testBST2 = insertList [5,3,1,9,7,13] Nil
 testBST3 = (Node 5 (Node 3 (Node 1 Nil Nil) (Node 4 Nil Nil)) (Node 9 (Node 7 Nil Nil) (Node 13 Nil Nil)))
+testBST4 = insertList [1,1,1,1,1,1,1,1,1] Nil
 
 {-Testen von isEmpty-}
 isEmptyTest1 = assertEqual "isEmpty Nil" True (isEmpty Nil)

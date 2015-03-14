@@ -62,8 +62,6 @@ insertList [] pTree = pTree
 insertList (x:xs) pTree = insertList xs (insert x pTree)
 
 {-Traversierungs Funktionen-}
---ToDo: Funktionen Refactoren
-
 preOrder :: BinarySearchTree a -> [a]
 preOrder Nil = []
 preOrder (Node tElement tLeft tRight) = [tElement] ++ preOrder tLeft ++ preOrder tRight
