@@ -5,7 +5,6 @@ insertList, preOrder, postOrder, inOrder, levelOrder,
 
 {-Datenstruktur-}
 data BinarySearchTree a = Nil | Node  a (BinarySearchTree a) (BinarySearchTree a)
-	--deriving Show
 
 {-Informations Funktionen-}
 isEmpty :: BinarySearchTree a -> Bool

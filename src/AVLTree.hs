@@ -5,5 +5,4 @@ insertList, preOrder, postOrder, inOrder, levelOrder
 
 import BinarySearchTree
 
-type AVLTree a = BinarySearchTree a
-
+newtype AVLTree a = BinarySearchTree a

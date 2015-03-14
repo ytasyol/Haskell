@@ -4,6 +4,7 @@ module Main where
 import Test.HUnit
 import Test.HUnit.Text
 import BinarySearchTreeTest
+import AVLTree
 
 main = do
     putStrLn "BinarySearchTreeTest:"
