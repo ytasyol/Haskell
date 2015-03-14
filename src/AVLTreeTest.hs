@@ -5,14 +5,13 @@ import Test.HUnit.Text
 import AVLTree
 
 {-Liste aller Tests-}
-avlTestList = TestList (removeTests ++ insertTests ++ insertListTests)
+avlTestList = TestList (insertTests ++ rebalanceTests)
 
-{-Tesdaten-}
-testBST1 = insertList [5,3,1,4,9,7,13] Nil
-testBST2 = insertList [5,3,1,9,7,13] Nil
-testBST3 = (Node 5 (Node 3 (Node 1 Nil Nil) (Node 4 Nil Nil)) (Node 9 (Node 7 Nil Nil) (Node 13 Nil Nil)))
+{-Tesdaten-} --ToDo
+testAVL = (Node 44 (Node 17 Nil (Node 32 Nil Nil)) (Node 78 (Node 50 (Node 48 Nil Nil) (Node 62 Nil Nil)) (Node 88 Nil Nil)))
+resultInsertAVL = (Node 44 (Node 17 Nil (Node 32 Nil Nil)) (Node 62 (Node 50 (Node 48 Nil Nil) (Node 54 Nil Nil)) (Node 78 Nil (Node 88 Nil Nil))))
 
-{-Testen von remove-}
+{-Testen von remove-} --ToDo
 remove1 = insertList [5,3,7,1,4] Nil
 remove1comp = insertList [5,3,1,4] Nil
 removeTest1 = assertEqual "remove1" (remove1comp) (remove 7 remove1)
@@ -50,12 +49,24 @@ removeTests = [TestLabel "remove1" (TestCase removeTest1),TestLabel "remove2" (T
                TestLabel "remove5" (TestCase removeTest5),TestLabel "remove6" (TestCase removeTest6),
                TestLabel "remove7" (TestCase removeTest7),TestLabel "remove8" (TestCase removeTest8)]
 
-{-Testen von insert-}
-insertTest1 = assertEqual ("insert" ++ ("Nil")) (Node 7 Nil Nil) (insert 7 Nil)
-insertTest2 = assertEqual ("insert" ++ (show testBST3)) (Node 5 (Node 3 (Node 1 Nil Nil) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) Nil) (Node 13 Nil Nil))) (insert 6 testBST3)
-insertTests = [TestLabel "insertTest1" (TestCase insertTest1), TestLabel "insertTest2" (TestCase insertTest2)]
+{-Testen von insert-} --ToDo
+insertTest1 = assertEqual "insert" resultInsertAVL (insert 54 testAVL)
+insertTests = [TestLabel "insertTest1" (TestCase insertTest1)]
 
-{-Testen von insertList-}
-insertListTest1 = assertEqual "insertList1" (Node 5 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) (Node 8 Nil Nil)) (Node 13 Nil Nil))) (insertList [6,8,2] testBST3)
-insertListTest2 = assertEqual "insertList1" (Node 7 (Node 4 Nil Nil) (Node 9 Nil (Node 13 Nil Nil))) (insertList [7,4,9,13] Nil)
-insertListTests = [TestLabel "insertListTest1" (TestCase insertListTest1), TestLabel "insertListTest2" (TestCase insertListTest2)]
+{-Testen von insertList-} --ToDo
+--insertListTest1 = assertEqual "insertList1" (Node 5 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 4 Nil Nil)) (Node 9 (Node 7 (Node 6 Nil Nil) (Node 8 Nil Nil)) (Node 13 Nil Nil))) (insertList [6,8,2] testBST3)
+--insertListTest2 = assertEqual "insertList1" (Node 7 (Node 4 Nil Nil) (Node 9 Nil (Node 13 Nil Nil))) (insertList [7,4,9,13] Nil)
+--insertListTests = [TestLabel "insertListTest1" (TestCase insertListTest1), TestLabel "insertListTest2" (TestCase insertListTest2)]
+
+{-Testen von rotate-}
+testAVLTree1 = (Node 13 Nil (Node 20 Nil (Node 24 Nil Nil)))
+testAVLTree2 = (Node 24 (Node 20 (Node 13 Nil Nil) Nil) Nil)
+testAVLTree3 = (Node 13 Nil (Node 24 (Node 20 Nil Nil) Nil))
+testAVLTree4 = (Node 24 (Node 13 Nil (Node 20 Nil Nil)) Nil)
+resultAVLTree = (Node 20 (Node 13 Nil Nil) (Node 24 Nil Nil))
+rebalanceTest1 = assertEqual "rebalance" resultAVLTree (rebalance testAVLTree1)
+rebalanceTest2 = assertEqual "rebalance" resultAVLTree (rebalance testAVLTree2)
+rebalanceTest3 = assertEqual "rebalance" resultAVLTree (rebalance testAVLTree3)
+rebalanceTest4 = assertEqual "rebalance" resultAVLTree (rebalance testAVLTree4)
+rebalanceTests = [TestLabel "rebalanceTest1" (TestCase rebalanceTest1),TestLabel "rebalanceTest2" (TestCase rebalanceTest2),
+                  TestLabel "rebalanceTest3" (TestCase rebalanceTest3), TestLabel "rebalanceTest4" (TestCase rebalanceTest4)]
