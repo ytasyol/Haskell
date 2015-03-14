@@ -8,7 +8,8 @@ import BinarySearchTree
 
 {-Liste aller Tests-}
 bstTestList = TestList (isEmptyTests ++ sizeTests ++ heightTests ++ containsTests ++ removeTests++ insertTests ++
-                     insertListTests ++ eqTests ++ levelOrderTests)
+                        insertListTests ++ eqTests ++ levelOrderTests ++ inOrderTests ++ preOrderTests ++
+                        postOrderTests)
 
 {-Tesdaten-}
 testBST1 = insertList [5,3,1,4,9,7,13] Nil
@@ -98,3 +99,18 @@ eqTests = [TestLabel "insertTest1" (TestCase insertTest1), TestLabel "insertTest
 levelOrderTest1 = assertEqual ("levelOrder" ++ (show testBST1)) [5,3,9,1,4,7,13] (levelOrder testBST1)
 levelOrderTest2 = assertEqual ("levelOrder" ++ (show testBST1)) [5,3,9,1,7,13] (levelOrder testBST2)
 levelOrderTests = [TestLabel "levelOrderTest1" (TestCase levelOrderTest1), TestLabel "levelOrderTest2" (TestCase levelOrderTest2)]
+
+{-Testen von inOrder-}
+inOrderTest1 = assertEqual ("inOrder" ++ (show testBST1)) [1,3,4,5,7,9,13] (inOrder testBST1)
+inOrderTest2 = assertEqual ("inOrder" ++ (show testBST1)) [1,3,5,7,9,13] (inOrder testBST2)
+inOrderTests = [TestLabel "inOrderTest1" (TestCase inOrderTest1), TestLabel "inOrderTest2" (TestCase inOrderTest2)]
+
+{-Testen von preOrder-}
+preOrderTest1 = assertEqual ("preOrder" ++ (show testBST1)) [5,3,1,4,9,7,13] (preOrder testBST1)
+preOrderTest2 = assertEqual ("preOrder" ++ (show testBST1)) [5,3,1,9,7,13] (preOrder testBST2)
+preOrderTests = [TestLabel "preOrderTest1" (TestCase preOrderTest1), TestLabel "preOrderTest2" (TestCase preOrderTest2)]
+
+{-Testen von posOrder-}
+postOrderTest1 = assertEqual ("postOrder" ++ (show testBST1)) [1,4,3,7,13,9,5] (postOrder testBST1)
+postOrderTest2 = assertEqual ("postOrder" ++ (show testBST1)) [1,3,7,13,9,5] (postOrder testBST2)
+postOrderTests = [TestLabel "postOrderTest1" (TestCase postOrderTest1), TestLabel "postOrderTest2" (TestCase postOrderTest2)]

@@ -5,7 +5,6 @@ import Test.HUnit.Text
 import BinarySearchTreeTest
 import AVLTreeTest
 
-
 main = do
     putStrLn "BinarySearchTreeTest:"
     runTestTT bstTestList
