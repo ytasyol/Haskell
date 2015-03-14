@@ -1,9 +1,9 @@
 ToDo-Liste:
 
 1. BinarySearchTree remove und levelOrder implementieren (Fertig)
-2. HUnit Tests fuer BinarySearchTree schreiben (Tests fuer inOrder, preOrder und postOrder fehlen)
+2. HUnit Tests fuer BinarySearchTree schreiben (Fertig)
     (https://wiki.haskell.org/HUnit_1.0_User%27s_Guide)
-3. BinarySearchTree zu AVLTree erweitern (rebalace Implementierung fehlt)
+3. BinarySearchTree zu AVLTree erweitern (Fertig)
 4. HUnit Tests fuer AVLTree (Tests anpassen)
 
 Optional:
