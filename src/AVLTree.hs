@@ -1,6 +1,6 @@
 module AVLTree (
 AVLTree, BST.BinarySearchTree(Nil,Node), BST.isEmpty, BST.size, BST.contains, insert, remove,
-BST.insertList, BST.preOrder, BST.postOrder, BST.inOrder, BST.levelOrder, rebalance
+insertList, BST.preOrder, BST.postOrder, BST.inOrder, BST.levelOrder, rebalance {-rebalance nur zum Testen-}
 ) where
 
 import qualified BinarySearchTree as BST
@@ -40,4 +40,4 @@ remove pElement pTree = rebalance (BST.remove pElement pTree)
 
 insertList :: (Ord a, Eq a) => [a] -> AVLTree a -> AVLTree a
 insertList [] pTree = pTree
-insertList (x:xs) pTree = insertList xs (rebalance (insert x pTree))
+insertList (x:xs) pTree = insertList xs  (insert x pTree)
