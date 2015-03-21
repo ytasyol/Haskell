@@ -16,10 +16,20 @@ main = do
 import AVLTree
 {-GUI Imports-}
 import Graphics.UI.Gtk
+import Data.IORef
 --import Graphics.UI.Gtk.Builder
 --import System.Glib.Attributes {-get, set-}
+-- import Data.Tree
+-- import Data.Tree.Pretty
 
---avlTree = Nil
+
+avlTree :: IORef AVLTree Int
+avlTree = unsafePerformIO (newIORef (Node 20 (Node 13 Nil Nil) (Node 24 Nil Nil)))
+
+
+-- avlTree :: AVLTree Int
+-- avlTree <- newIORef (Node 20 (Node 13 Nil Nil) (Node 24 Nil Nil))
+
 
 main :: IO ()
 main = do
@@ -41,7 +51,7 @@ initWindow = do
     vb2 <- vBoxNew False 5
     boxPackStart hb vb2 PackNatural 0
 
-    -- INSERT
+    -- Function Label
     label_func <- labelNewWithMnemonic "functions:"
     boxPackStart vb label_func PackNatural 0
 
@@ -57,10 +67,13 @@ initWindow = do
     btn_clear <- buttonNewWithLabel "clear"
     boxPackStart vb btn_clear PackNatural 0
 
+    -- Texteingabefeld
     txtfield <- entryNew
     boxPackStart vb2 txtfield PackNatural 3
 
-
+    -- TextAusgabeFeld
+    txtView <- labelNewWithMnemonic ""
+    boxPackStart vb2 txtView PackNatural 3
 
     txtstack <- statusbarNew
     boxPackStart vb2 txtstack PackNatural 0
@@ -69,19 +82,59 @@ initWindow = do
     widgetShowAll window
     --widgetSetSensitivity btn_insert False
 
-    onEntryActivate txtfield (saveText txtfield btn_insert txtstack id)
-    onPressed btn_insert (statusbarPop txtstack id)
+    -- onEntryActivate txtfield (saveText txtfield btn_insert txtstack id)
+    -- onPressed btn_insert (statusbarPop txtstack id)
+    -- onPressed btn_insert (saveText txtfield txtView txtstack id)
+
+     -- readIORef v
+     --  v 7
+
+    onPressed btn_insert (do
+        myString <- readInput txtfield
+        writeIORef avlTree ((addToTree (read myString :: Int) (readIORef avlTree)))
+        showMessage txtView (drawAVLTreePretty avlTree)
+        )
+
+    onPressed btn_clear (do
+         showMessage txtView ""
+         setBar txtstack "Clear" id)
+
     onDestroy window mainQuit
 
     mainGUI
 
-saveText :: Entry -> Button -> Statusbar -> ContextId -> IO ()
-saveText fld b stk id = do
+showMessage ::  Label -> String -> IO ()
+showMessage label string = do
+    labelSetText label string
+    return ()
+
+setBar ::  Statusbar -> String -> ContextId -> IO ()
+setBar statusBar string id = do
+    statusbarPush statusBar id string
+    return ()
+
+
+readInput :: Entry -> IO String
+readInput entry = entryGetText entry
+
+
+saveText :: Entry -> Label -> Statusbar -> ContextId -> IO ()
+saveText fld label stk id = do
          txt <- entryGetText fld
-         let mesg | txt == reverse txt = "\"" ++ txt ++ "\""  ++
-                                         " is equal to its reverse"
-                  | otherwise =  "\"" ++ txt ++ "\""  ++
-                                 " is not equal to its reverse"
-         widgetSetSensitivity b True
-         msgid <- statusbarPush stk id mesg
+         x txt stk id
+         --msgid <- statusbarPush stk id mesg
+         myString <- readInput fld
+         showMessage label myString
          return ()
+
+x :: String -> Statusbar -> ContextId -> IO ()
+x txt statusBar id
+    | txt == "" = setBar statusBar "no Input.." id
+    | length txt > 5 = setBar statusBar "Input to long.." id
+    | otherwise = setBar statusBar ("Input \"" ++ txt ++ "\"") id
+
+addToTree :: (Ord a, Eq a) => a -> AVLTree a -> AVLTree a
+addToTree  element tree = insert element tree
+
+--removeFromTree :: (Ord a, Eq a) => a -> AVLTree a -> AVLTree a
+--removeFromTree element tree = remove element tree
