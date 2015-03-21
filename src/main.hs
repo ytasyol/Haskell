@@ -13,10 +13,10 @@ main = do
 -}
 
 {-Imports-}
---import AVLTree
+import AVLTree
 {-GUI Imports-}
 import Graphics.UI.Gtk
-import Graphics.UI.Gtk.Builder
+--import Graphics.UI.Gtk.Builder
 --import System.Glib.Attributes {-get, set-}
 
 --avlTree = Nil
@@ -28,28 +28,60 @@ main = do
 initWindow :: IO ()
 initWindow = do
     initGUI
-    --Creat builder and load glade file
-    builder <- builderNew
-    builderAddFromFile builder "interface2.glade"
-    mainWindow <- builderGetObject builder castToWindow "windowMain"
-    onDestroy mainWindow mainQuit
-    --Label, Inputs and there Events
-    treeView <- builderGetObject builder castToLabel "labelView"
-    --inputEntry <- builderGetObject builder castToEntry "entryInput"
-    inputEntry <- entryNew
-    --Button and ButtonEvents
-    isEmptyButton <- builderGetObject builder castToButton "buttonIsEmpty"
-    --onClicked isEmptyButton (set treeView [labelLabel := (show (insert 5 avlTree))])
+    window <- windowNew
+    set window [windowTitle := "AVL-Tree", containerBorderWidth := 10]
 
-    sizeButton <- builderGetObject builder castToButton "buttonSize"
-    onClicked sizeButton (sizeClick inputEntry treeView)
 
-    widgetShowAll mainWindow
+    hb <- hBoxNew False 5
+    containerAdd window hb
+
+    vb <- vBoxNew False 5
+    boxPackStart hb vb PackNatural 0
+
+    vb2 <- vBoxNew False 5
+    boxPackStart hb vb2 PackNatural 0
+
+    -- INSERT
+    label_func <- labelNewWithMnemonic "functions:"
+    boxPackStart vb label_func PackNatural 0
+
+    -- INSERT
+    btn_insert <- buttonNewWithLabel "insert"
+    boxPackStart vb btn_insert PackNatural 0
+
+    -- REMOVE
+    btn_remove <- buttonNewWithLabel "remove"
+    boxPackStart vb btn_remove PackNatural 0
+
+    -- CLEAR
+    btn_clear <- buttonNewWithLabel "clear"
+    boxPackStart vb btn_clear PackNatural 0
+
+    txtfield <- entryNew
+    boxPackStart vb2 txtfield PackNatural 3
+
+
+
+    txtstack <- statusbarNew
+    boxPackStart vb2 txtstack PackNatural 0
+    id <- statusbarGetContextId txtstack "Line"
+
+    widgetShowAll window
+    --widgetSetSensitivity btn_insert False
+
+    onEntryActivate txtfield (saveText txtfield btn_insert txtstack id)
+    onPressed btn_insert (statusbarPop txtstack id)
+    onDestroy window mainQuit
+
     mainGUI
 
-sizeClick :: Entry -> Label -> IO ()
-sizeClick inputEntry treeView = do
-    value <- entryGetText inputEntry
-    --set treeView [labelLabel := ($ value)]
-    --set treeView [labelLabel := (show (insert 5 avlTree))]
-    return ()
+saveText :: Entry -> Button -> Statusbar -> ContextId -> IO ()
+saveText fld b stk id = do
+         txt <- entryGetText fld
+         let mesg | txt == reverse txt = "\"" ++ txt ++ "\""  ++
+                                         " is equal to its reverse"
+                  | otherwise =  "\"" ++ txt ++ "\""  ++
+                                 " is not equal to its reverse"
+         widgetSetSensitivity b True
+         msgid <- statusbarPush stk id mesg
+         return ()
