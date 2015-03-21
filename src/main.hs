@@ -13,17 +13,19 @@ main = do
 -}
 
 {-Imports-}
-import AVLTree
+--import AVLTree
 {-GUI Imports-}
 import Graphics.UI.Gtk
 import Graphics.UI.Gtk.Builder
-import System.Glib.Attributes {-get, set-}
+--import System.Glib.Attributes {-get, set-}
 
-avlTree = Nil
+--avlTree = Nil
 
+main :: IO ()
 main = do
     initWindow
 
+initWindow :: IO ()
 initWindow = do
     initGUI
     --Creat builder and load glade file
@@ -33,13 +35,21 @@ initWindow = do
     onDestroy mainWindow mainQuit
     --Label, Inputs and there Events
     treeView <- builderGetObject builder castToLabel "labelView"
+    --inputEntry <- builderGetObject builder castToEntry "entryInput"
+    inputEntry <- entryNew
     --Button and ButtonEvents
     isEmptyButton <- builderGetObject builder castToButton "buttonIsEmpty"
-    onClicked isEmptyButton (set treeView [labelLabel := (show (insert 5 avlTree))])
+    --onClicked isEmptyButton (set treeView [labelLabel := (show (insert 5 avlTree))])
+
+    sizeButton <- builderGetObject builder castToButton "buttonSize"
+    onClicked sizeButton (sizeClick inputEntry treeView)
 
     widgetShowAll mainWindow
     mainGUI
 
---isEmptyClick = do
-    --(putStrLn (show (insert 5 avlTree)))
+sizeClick :: Entry -> Label -> IO ()
+sizeClick inputEntry treeView = do
+    value <- entryGetText inputEntry
+    --set treeView [labelLabel := ($ value)]
     --set treeView [labelLabel := (show (insert 5 avlTree))]
+    return ()
