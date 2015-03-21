@@ -10,6 +10,7 @@ avlTestList = TestList (insertTests ++ rebalanceTests)
 {-Tesdaten-} --ToDo
 testAVL = (Node 44 (Node 17 Nil (Node 32 Nil Nil)) (Node 78 (Node 50 (Node 48 Nil Nil) (Node 62 Nil Nil)) (Node 88 Nil Nil)))
 resultInsertAVL = (Node 44 (Node 17 Nil (Node 32 Nil Nil)) (Node 62 (Node 50 (Node 48 Nil Nil) (Node 54 Nil Nil)) (Node 78 Nil (Node 88 Nil Nil))))
+drawTestAVLPretty = putStrLn (drawAVLTreePretty testAVL)
 
 {-Testen von remove-} --ToDo
 

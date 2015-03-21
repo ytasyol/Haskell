@@ -1,8 +1,11 @@
 module AVLTree (
 AVLTree, BST.BinarySearchTree(Nil,Node), BST.isEmpty, BST.size, BST.contains, insert, remove,
-insertList, BST.preOrder, BST.postOrder, BST.inOrder, BST.levelOrder, rebalance {-rebalance nur zum Testen-}
+insertList, BST.preOrder, BST.postOrder, BST.inOrder, BST.levelOrder, rebalance {-rebalance nur zum Testen-},
+avlTreeToDataTree, drawAVLTreePretty
 ) where
 
+import qualified Data.Tree as DT
+import Data.Tree.Pretty
 import qualified BinarySearchTree as BST
 
 type AVLTree = BST.BinarySearchTree
@@ -52,3 +55,25 @@ remove pElement pTree = rebalance (BST.remove pElement pTree)
 insertList :: (Ord a, Eq a) => [a] -> AVLTree a -> AVLTree a
 insertList [] pTree = pTree
 insertList (x:xs) pTree = insertList xs  (insert x pTree)
+
+--drawAVLTree :: (Show a) => AVLTree a -> String
+--drawAVLTree BST.Nil = "Nil"
+--drawAVLTree (BST.Node tE tL tR) = drawVerticalTree (DT.Node (show tE) ((childsToDataTree tL) ++ (childsToDataTree tR)))
+--    where
+--        childsToDataTree BST.Nil = []
+--        childsToDataTree ((BST.Node tE tL tR)) = [] : (DT.Node (show tE) ((childsToDataTree tL) ++ (childsToDataTree tR)))
+
+
+drawAVLTreePretty :: (Show a) => AVLTree a -> String
+drawAVLTreePretty BST.Nil = "Nil"
+drawAVLTreePretty avlTree = drawVerticalTree (treeToTreeString (avlTreeToDataTree avlTree))
+--Hilfsfunktion
+treeToTreeString :: (Show a) => DT.Tree a -> DT.Tree String
+treeToTreeString (DT.Node tE subTree) = DT.Node (show tE) [ (treeToTreeString node) | node <- subTree]
+---------------
+
+avlTreeToDataTree :: AVLTree a -> DT.Tree a
+avlTreeToDataTree (BST.Node tE tL tR) = DT.Node tE ((x tL) ++ (x tR))
+    where
+        x BST.Nil = []
+        x avlTree = [avlTreeToDataTree avlTree]
