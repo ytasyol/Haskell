@@ -13,6 +13,7 @@ type AVLTree = BST.BinarySearchTree
 rebalance :: AVLTree a -> AVLTree a
 rebalance BST.Nil = BST.Nil
 rebalance (BST.Node tE tL tR)
+    | (<) (abs (hDC (BST.Node tE tL tR))) 2 = (BST.Node tE tL tR)
     | (>) (abs (hDC tL)) 1 = (BST.Node tE (rebalance tL) tR)
     | (>) (abs (hDC tR)) 1 = (BST.Node tE tL (rebalance tR))
     | (<) (BST.height tL) (BST.height tR) && (<) (hDC tR) 0 = rL(BST.Node tE tL tR)
