@@ -88,12 +88,6 @@ levelOrder pTree = getElements (generateNodeList [pTree])
 	    getElements (Nil:xs) = getElements xs
 	    getElements ((Node tElement tLeft tRight):xs) = [tElement] ++ getElements xs
 
-{-Signaturen fuer Interne Funktionen (fuer Verstaendnis)-}
---generateNodeList :: [BinarySearchTree a] -> [BinarySearchTree a]
---getChilds :: BinarySearchTree a -> [BinarySearchTree a]
---getElements :: [BinarySearchTree a] -> [a]
---listListToList :: [[BinarySearchTree a]] -> [BinarySearchTree a]
-
 instance (Eq a) => Eq (BinarySearchTree a) where
     (==) Nil Nil = True
     (==) (Node firstElement firstLeft firstRight) (Node secondElement secondLeft secondRight)

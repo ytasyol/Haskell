@@ -13,7 +13,7 @@ type AVLTree = BST.BinarySearchTree
 rebalance :: AVLTree a -> AVLTree a
 rebalance BST.Nil = BST.Nil
 rebalance (BST.Node tE tL tR)
-    | (<) (abs (hDC (BST.Node tE tL tR))) 2 = (BST.Node tE tL tR)
+    | (<) (abs (hDC (BST.Node tE tL tR))) 2 = (BST.Node tE (rebalance tL) (rebalance tR))
     | (>) (abs (hDC tL)) 1 = (BST.Node tE (rebalance tL) tR)
     | (>) (abs (hDC tR)) 1 = (BST.Node tE tL (rebalance tR))
     | (<) (BST.height tL) (BST.height tR) && (<) (hDC tR) 0 = rL(BST.Node tE tL tR)
@@ -56,14 +56,6 @@ remove pElement pTree = rebalance (BST.remove pElement pTree)
 insertList :: (Ord a, Eq a) => [a] -> AVLTree a -> AVLTree a
 insertList [] pTree = pTree
 insertList (x:xs) pTree = insertList xs  (insert x pTree)
-
---drawAVLTree :: (Show a) => AVLTree a -> String
---drawAVLTree BST.Nil = "Nil"
---drawAVLTree (BST.Node tE tL tR) = drawVerticalTree (DT.Node (show tE) ((childsToDataTree tL) ++ (childsToDataTree tR)))
---    where
---        childsToDataTree BST.Nil = []
---        childsToDataTree ((BST.Node tE tL tR)) = [] : (DT.Node (show tE) ((childsToDataTree tL) ++ (childsToDataTree tR)))
-
 
 drawAVLTreePretty :: (Show a) => AVLTree a -> String
 drawAVLTreePretty BST.Nil = "Nil"
